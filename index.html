@@ -1101,6 +1101,31 @@
     .modal-stack span { padding:.35rem .6rem; border-radius:6px; background:rgba(124,58,237,.1); border:1px solid rgba(124,58,237,.25); color:#c4b5fd; font-size:.72rem; font-family:'JetBrains Mono',monospace; }
     body.modal-open { overflow:hidden; }
 
+    /* ── PROJECT DETAIL BUTTON ── */
+    .project-details-btn {
+      margin-top: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 1rem;
+      border: 1px solid rgba(0,229,255,0.35);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(124,58,237,0.12));
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .project-details-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(0,229,255,0.2), rgba(124,58,237,0.2));
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .project-details-btn span { font-size: 1rem; }
+
     /* ── MOBILE ── */
     @media (max-width: 700px) {
 
@@ -1657,7 +1682,7 @@
 
 
         <!-- PROJECT 1 -->
-        <div class="project-card reveal clickable" data-project="resume" role="button" tabindex="0" aria-label="View details for AI Resume Screening and ATS System">
+        <div class="project-card reveal clickable" data-project="resume" tabindex="0" aria-label="View details for AI Resume Screening and ATS System">
 
           <div>
 
@@ -1706,6 +1731,10 @@
 
             </div>
 
+            <button type="button" class="project-details-btn" onclick="openProject('resume')">
+              View Project Details <span>↗</span>
+            </button>
+
           </div>
 
 
@@ -1717,7 +1746,7 @@
 
 
         <!-- PROJECT 2 -->
-        <div class="project-card reveal clickable" data-project="support" role="button" tabindex="0" aria-label="View details for AI Customer Support Ticketing System">
+        <div class="project-card reveal clickable" data-project="support" tabindex="0" aria-label="View details for AI Customer Support Ticketing System">
 
           <div>
 
@@ -1765,6 +1794,10 @@
               </span>
 
             </div>
+
+            <button type="button" class="project-details-btn" onclick="openProject('support')">
+              View Project Details <span>↗</span>
+            </button>
 
           </div>
 
