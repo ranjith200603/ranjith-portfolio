@@ -988,6 +988,144 @@
         top 0.08s;
     }
 
+
+    /* ── NAV RESUME BUTTON ── */
+    .nav-resume {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #03050a !important;
+      background: linear-gradient(135deg, var(--accent), #67e8f9);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      border: 1px solid rgba(0,229,255,0.5);
+      box-shadow: 0 0 18px rgba(0,229,255,0.16);
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      white-space: nowrap;
+    }
+    .nav-resume:hover {
+      color: #03050a !important;
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 0 0 18px rgba(0,229,255,0.35), 0 0 35px rgba(124,58,237,0.18);
+    }
+    .nav-resume:active { transform: translateY(0); }
+
+    /* ── PROJECT DETAILS ── */
+    .project-card.clickable { cursor: pointer; position: relative; }
+    .project-card.clickable:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .project-card.clickable::after {
+      content: 'Click to view details ↗';
+      position: absolute;
+      right: 2rem;
+      bottom: 1.5rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid rgba(0,229,255,0.22);
+      border-radius: 6px;
+      background: rgba(0,229,255,0.06);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity .2s, transform .2s;
+      pointer-events: none;
+    }
+    .project-card.clickable:hover::after,
+    .project-card.clickable:focus-visible::after { opacity: 1; transform: translateY(0); }
+
+    .project-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(3,5,10,0.78);
+      backdrop-filter: blur(14px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .project-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
+    .project-modal-content {
+      position: relative;
+      width: min(900px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: linear-gradient(145deg, rgba(10,16,24,.98), rgba(6,11,18,.98));
+      border: 1px solid rgba(0,229,255,.25);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 25px 100px rgba(0,0,0,.65), 0 0 50px rgba(0,229,255,.08);
+      transform: translateY(24px) scale(.98);
+      transition: transform .25s ease;
+    }
+    .project-modal.active .project-modal-content { transform: translateY(0) scale(1); }
+    .project-modal-close {
+      position: sticky;
+      top: 0;
+      float: right;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .project-modal-close:hover { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
+    .modal-tag { font-family:'JetBrains Mono',monospace; color:var(--accent2); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.65rem; padding-right:3rem; }
+    .modal-title { font-size:clamp(1.5rem,4vw,2.2rem); margin-bottom:.8rem; }
+    .modal-intro { color:var(--muted); font-size:.95rem; margin-bottom:1.5rem; }
+    .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .modal-block { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:1.25rem; }
+    .modal-block.full { grid-column:1 / -1; }
+    .modal-block h4 { color:var(--accent); font-size:.85rem; font-family:'JetBrains Mono',monospace; margin-bottom:.7rem; }
+    .modal-block p, .modal-block li { color:var(--muted); font-size:.85rem; }
+    .modal-block ul { padding-left:1.1rem; }
+    .modal-block li { margin-bottom:.45rem; }
+    .workflow { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; }
+    .workflow-step { padding:.45rem .65rem; border:1px solid rgba(0,229,255,.18); border-radius:7px; background:rgba(0,229,255,.05); color:var(--text); font-family:'JetBrains Mono',monospace; font-size:.68rem; }
+    .workflow-arrow { color:var(--accent); font-size:.9rem; }
+    .modal-stack { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .modal-stack span { padding:.35rem .6rem; border-radius:6px; background:rgba(124,58,237,.1); border:1px solid rgba(124,58,237,.25); color:#c4b5fd; font-size:.72rem; font-family:'JetBrains Mono',monospace; }
+    body.modal-open { overflow:hidden; }
+
+    /* ── PROJECT DETAIL BUTTON ── */
+    .project-details-btn {
+      margin-top: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 1rem;
+      border: 1px solid rgba(0,229,255,0.35);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(124,58,237,0.12));
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .project-details-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(0,229,255,0.2), rgba(124,58,237,0.2));
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .project-details-btn span { font-size: 1rem; }
+
     /* ── MOBILE ── */
     @media (max-width: 700px) {
 
@@ -1009,7 +1147,32 @@
       }
 
       .nav-links {
-        gap: 1rem;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .nav-resume {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.68rem !important;
+      }
+
+      .project-card.clickable::after {
+        right: 1.25rem;
+        bottom: 1.25rem;
+      }
+
+      .project-modal-content {
+        padding: 1.25rem;
+        max-height: 92vh;
+      }
+
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-block.full {
+        grid-column: auto;
       }
 
       .project-card {
@@ -1108,6 +1271,7 @@
       <a href="#projects">Projects</a>
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
+      <a href="Ranjithkumar-resume.pdf" class="nav-resume" download="Ranjithkumar-Resume.pdf" aria-label="Download Ranjithkumar Resume"><span>↓</span> Resume</a>
     </div>
 
   </nav>
@@ -1518,7 +1682,7 @@
 
 
         <!-- PROJECT 1 -->
-        <div class="project-card reveal">
+        <div class="project-card reveal clickable" data-project="resume" tabindex="0" aria-label="View details for AI Resume Screening and ATS System">
 
           <div>
 
@@ -1567,6 +1731,10 @@
 
             </div>
 
+            <button type="button" class="project-details-btn" onclick="openProject('resume')">
+              View Project Details <span>↗</span>
+            </button>
+
           </div>
 
 
@@ -1578,7 +1746,7 @@
 
 
         <!-- PROJECT 2 -->
-        <div class="project-card reveal">
+        <div class="project-card reveal clickable" data-project="support" tabindex="0" aria-label="View details for AI Customer Support Ticketing System">
 
           <div>
 
@@ -1626,6 +1794,10 @@
               </span>
 
             </div>
+
+            <button type="button" class="project-details-btn" onclick="openProject('support')">
+              View Project Details <span>↗</span>
+            </button>
 
           </div>
 
@@ -1723,6 +1895,25 @@
 
   </section>
 
+
+
+  <!-- PROJECT DETAILS MODAL -->
+  <div class="project-modal" id="projectModal" aria-hidden="true">
+    <div class="project-modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="project-modal-close" id="projectModalClose" type="button" aria-label="Close project details">&times;</button>
+      <p class="modal-tag" id="modalTag"></p>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-intro" id="modalIntro"></p>
+      <div class="modal-grid">
+        <div class="modal-block"><h4>The Problem</h4><p id="modalProblem"></p></div>
+        <div class="modal-block"><h4>The Solution</h4><p id="modalSolution"></p></div>
+        <div class="modal-block full"><h4>Key Features</h4><ul id="modalFeatures"></ul></div>
+        <div class="modal-block full"><h4>Automation Workflow</h4><div class="workflow" id="modalWorkflow"></div></div>
+        <div class="modal-block"><h4>Technology Stack</h4><div class="modal-stack" id="modalStack"></div></div>
+        <div class="modal-block"><h4>Outcome</h4><p id="modalOutcome"></p></div>
+      </div>
+    </div>
+  </div>
 
   <!-- EDUCATION -->
   <section id="education">
@@ -1985,6 +2176,88 @@
       barObs.observe(b)
     );
 
+
+
+    // ── PROJECT DETAILS MODAL ──
+    const projectDetails = {
+      resume: {
+        tag: 'AI · Automation · HR Tech',
+        title: 'AI Resume Screening & ATS System',
+        intro: 'An AI-powered resume screening workflow designed to reduce manual recruiter effort by analyzing resumes, generating candidate scores, and automatically routing candidates based on hiring criteria.',
+        problem: 'Manual resume screening can take significant time and may lead to inconsistent evaluation when many candidates apply for the same role.',
+        solution: 'Built an automated workflow with n8n, OpenAI API, Python, and REST APIs to process resumes, extract useful information, evaluate candidates, and make the next workflow decision automatically.',
+        features: ['Resume intake and automated document processing','AI-powered resume analysis against hiring requirements','Candidate scoring and hiring recommendations','Conditional routing for shortlisted and rejected candidates','Job/API integration for continuing the recruitment workflow','Automated candidate communication and tracking'],
+        workflow: ['Resume Upload / Webhook','PDF Text Extraction','AI Analysis','Candidate Score','IF Decision','Shortlist / Reject','API & Notification','Tracking'],
+        stack: ['n8n','OpenAI API','Python','REST API'],
+        outcome: 'The workflow reduces repetitive screening work, creates a more consistent evaluation process, and helps recruiters move qualified candidates through the hiring pipeline faster.'
+      },
+      support: {
+        tag: 'AI · Customer Support · Automation',
+        title: 'AI Customer Support Ticketing System',
+        intro: 'An AI-based customer support automation system that helps organize incoming support requests, categorize tickets, track their status, and keep support data centralized.',
+        problem: 'Support teams can spend valuable time manually sorting requests, identifying ticket categories, updating records, and sending routine notifications.',
+        solution: 'Designed an n8n workflow using OpenAI for intelligent categorization, Gmail for support communication, and Google Sheets for centralized ticket data and status tracking.',
+        features: ['Automated support request intake','AI-based ticket categorization','Centralized ticket and status tracking','Google Sheets data management','Automated email notifications','A structured workflow for faster support handling'],
+        workflow: ['Support Request','Gmail / Trigger','n8n Processing','OpenAI Classification','Google Sheets','Status Tracking','Email Notification'],
+        stack: ['n8n','OpenAI','Gmail','Google Sheets'],
+        outcome: 'The system improves support workflow efficiency by reducing repetitive manual tasks and giving the team a clearer, centralized view of incoming tickets and their status.'
+      }
+    };
+
+    const projectModal = document.getElementById('projectModal');
+    const projectModalClose = document.getElementById('projectModalClose');
+    const modalTag = document.getElementById('modalTag');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIntro = document.getElementById('modalIntro');
+    const modalProblem = document.getElementById('modalProblem');
+    const modalSolution = document.getElementById('modalSolution');
+    const modalFeatures = document.getElementById('modalFeatures');
+    const modalWorkflow = document.getElementById('modalWorkflow');
+    const modalStack = document.getElementById('modalStack');
+    const modalOutcome = document.getElementById('modalOutcome');
+    let lastProjectCard = null;
+
+    function openProject(projectKey) {
+      const project = projectDetails[projectKey];
+      if (!project) return;
+      lastProjectCard = document.querySelector(`[data-project="${projectKey}"]`);
+      modalTag.textContent = project.tag;
+      modalTitle.textContent = project.title;
+      modalIntro.textContent = project.intro;
+      modalProblem.textContent = project.problem;
+      modalSolution.textContent = project.solution;
+      modalOutcome.textContent = project.outcome;
+      modalFeatures.innerHTML = project.features.map(feature => `<li>${feature}</li>`).join('');
+      modalWorkflow.innerHTML = project.workflow.map((step, index) => `<span class="workflow-step">${step}</span>${index < project.workflow.length - 1 ? '<span class="workflow-arrow">→</span>' : ''}`).join('');
+      modalStack.innerHTML = project.stack.map(item => `<span>${item}</span>`).join('');
+      projectModal.classList.add('active');
+      projectModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      setTimeout(() => projectModalClose.focus(), 50);
+    }
+
+    function closeProject() {
+      projectModal.classList.remove('active');
+      projectModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (lastProjectCard) lastProjectCard.focus();
+    }
+
+    document.querySelectorAll('.project-card[data-project]').forEach(card => {
+      card.addEventListener('click', event => {
+        if (event.target.closest('a')) return;
+        openProject(card.dataset.project);
+      });
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openProject(card.dataset.project);
+        }
+      });
+    });
+    projectModalClose.addEventListener('click', closeProject);
+    projectModal.addEventListener('click', event => { if (event.target === projectModal) closeProject(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && projectModal.classList.contains('active')) closeProject(); });
 
     // ── TYPING EFFECT ──
 
