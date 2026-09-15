@@ -1,1 +1,3236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
+  <title>Ranjithkumar | Admin Panel</title>
+
+  <meta
+    name="description"
+    content="Ranjithkumar portfolio administration dashboard"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #03050a;
+      --surface: #060b12;
+      --card: #0a1018;
+      --card2: #0d1520;
+      --border: #162030;
+
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+
+      --text: #e2e8f0;
+      --muted: #64748b;
+
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+
+      --glow: rgba(0, 229, 255, 0.18);
+      --glow2: rgba(124, 58, 237, 0.18);
+
+      --sidebar-width: 260px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(0, 229, 255, 0.08),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 90% 90%,
+          rgba(124, 58, 237, 0.08),
+          transparent 25%
+        ),
+        var(--bg);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       LAYOUT
+    ========================= */
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+
+      width: var(--sidebar-width);
+
+      padding: 24px 16px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(6, 11, 18, 0.98),
+          rgba(3, 5, 10, 0.98)
+        );
+
+      border-right: 1px solid var(--border);
+
+      z-index: 100;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 8px 10px 26px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent2)
+        );
+
+      color: #020617;
+
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 800;
+
+      box-shadow:
+        0 0 25px var(--glow),
+        0 0 30px var(--glow2);
+    }
+
+    .brand-text h2 {
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      margin-top: 3px;
+      font-size: 11px;
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .menu-label {
+      padding: 0 10px;
+      margin-bottom: 9px;
+
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-item {
+      width: 100%;
+
+      border: 1px solid transparent;
+      background: transparent;
+
+      color: #94a3b8;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 12px 13px;
+
+      border-radius: 10px;
+
+      text-align: left;
+
+      transition: 0.25s ease;
+    }
+
+    .nav-item:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--border);
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0, 229, 255, 0.08),
+          rgba(124, 58, 237, 0.06)
+        );
+
+      border-color: rgba(0, 229, 255, 0.18);
+
+      box-shadow:
+        inset 3px 0 0 var(--accent);
+    }
+
+    .nav-icon {
+      width: 21px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .nav-text {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+    }
+
+    .view-site {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      padding: 11px;
+
+      border-radius: 10px;
+
+      border: 1px solid var(--border);
+      background: var(--card);
+
+      color: #cbd5e1;
+
+      font-size: 12px;
+
+      transition: 0.25s ease;
+    }
+
+    .view-site:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 20px var(--glow);
+    }
+
+    .logout-btn {
+      margin-top: 8px;
+
+      width: 100%;
+
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.05);
+
+      color: #f87171;
+
+      padding: 11px;
+
+      border-radius: 10px;
+
+      transition: 0.25s ease;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+
+      min-height: 100vh;
+
+      padding: 28px;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 30px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+
+      width: 42px;
+      height: 42px;
+
+      border-radius: 10px;
+
+      border: 1px solid var(--border);
+      background: var(--card);
+
+      color: var(--text);
+
+      font-size: 20px;
+    }
+
+    .page-title h1 {
+      font-size: clamp(23px, 3vw, 30px);
+      font-weight: 700;
+    }
+
+    .page-title p {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent2)
+        );
+
+      color: #020617;
+
+      font-weight: 800;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .profile-role {
+      margin-top: 2px;
+
+      font-size: 10px;
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+
+      padding: 20px;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(10, 16, 24, 0.96),
+          rgba(6, 11, 18, 0.96)
+        );
+
+      border: 1px solid var(--border);
+
+      transition: 0.25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 229, 255, 0.25);
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25),
+        0 0 25px rgba(0, 229, 255, 0.05);
+    }
+
+    .stat-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 100px;
+      height: 100px;
+
+      right: -40px;
+      top: -40px;
+
+      border-radius: 50%;
+
+      background: var(--glow);
+
+      filter: blur(20px);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 16px;
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background: rgba(0, 229, 255, 0.07);
+
+      color: var(--accent);
+
+      font-size: 17px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .stat-note {
+      margin-top: 5px;
+
+      font-size: 10px;
+
+      color: var(--success);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       GRID
+    ========================= */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(10, 16, 24, 0.95),
+          rgba(6, 11, 18, 0.95)
+        );
+
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 18px 20px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .panel-subtitle {
+      margin-top: 3px;
+
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    /* =========================
+       PROJECT LIST
+    ========================= */
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 13px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 11px;
+
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .project-info {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .project-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      background: rgba(124, 58, 237, 0.1);
+
+      color: #a78bfa;
+    }
+
+    .project-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .project-tech {
+      margin-top: 3px;
+
+      font-size: 10px;
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .status {
+      padding: 5px 8px;
+
+      border-radius: 6px;
+
+      font-size: 9px;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .status.live {
+      color: #4ade80;
+      background: rgba(34, 197, 94, 0.08);
+    }
+
+    .status.draft {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    /* =========================
+       ACTIVITY
+    ========================= */
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 12px;
+
+      padding: 13px 0;
+
+      border-bottom: 1px solid rgba(22, 32, 48, 0.7);
+    }
+
+    .activity-item:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+
+      margin-top: 5px;
+
+      border-radius: 50%;
+
+      background: var(--accent);
+
+      box-shadow: 0 0 10px var(--glow);
+    }
+
+    .activity-text {
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+
+    .activity-time {
+      margin-top: 3px;
+
+      font-size: 9px;
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       SECTION TOOLBAR
+    ========================= */
+
+    .section-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: 19px;
+    }
+
+    .section-heading p {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      padding: 10px 14px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          #0ea5e9
+        );
+
+      color: #020617;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      box-shadow: 0 0 20px var(--glow);
+
+      transition: 0.25s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 0 30px var(--glow),
+        0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .secondary-btn {
+      padding: 10px 14px;
+
+      border-radius: 9px;
+
+      border: 1px solid var(--border);
+
+      background: var(--card);
+
+      color: #cbd5e1;
+
+      font-size: 11px;
+    }
+
+    .secondary-btn:hover {
+      border-color: rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 11px;
+      color: #94a3b8;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+
+      border: 1px solid var(--border);
+
+      background: #050a11;
+
+      color: var(--text);
+
+      border-radius: 9px;
+
+      padding: 11px 12px;
+
+      outline: none;
+
+      font-size: 12px;
+
+      transition: 0.2s ease;
+    }
+
+    .form-textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: rgba(0, 229, 255, 0.45);
+
+      box-shadow:
+        0 0 0 3px rgba(0, 229, 255, 0.05);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+
+      margin-top: 18px;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+
+      border-collapse: collapse;
+
+      min-width: 650px;
+    }
+
+    .data-table th {
+      text-align: left;
+
+      padding: 12px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      font-family: "JetBrains Mono", monospace;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 13px 12px;
+
+      border-bottom: 1px solid rgba(22, 32, 48, 0.65);
+
+      font-size: 11px;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .table-title {
+      font-weight: 600;
+    }
+
+    .table-muted {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      width: 31px;
+      height: 31px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 7px;
+
+      border: 1px solid var(--border);
+
+      background: transparent;
+
+      color: #94a3b8;
+
+      transition: 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .icon-btn.delete:hover {
+      border-color: var(--danger);
+      color: #f87171;
+    }
+
+    /* =========================
+       CERTIFICATE CARD
+    ========================= */
+
+    .certificate-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 15px;
+    }
+
+    .certificate-card {
+      border: 1px solid var(--border);
+
+      border-radius: 13px;
+
+      overflow: hidden;
+
+      background: var(--card);
+
+      transition: 0.25s ease;
+    }
+
+    .certificate-card:hover {
+      transform: translateY(-2px);
+
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+
+    .certificate-image {
+      height: 140px;
+
+      display: grid;
+      place-items: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0, 229, 255, 0.07),
+          rgba(124, 58, 237, 0.1)
+        );
+
+      color: var(--muted);
+
+      font-size: 28px;
+    }
+
+    .certificate-content {
+      padding: 14px;
+    }
+
+    .certificate-title {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .certificate-issuer {
+      margin-top: 4px;
+
+      font-size: 10px;
+
+      color: var(--accent);
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .certificate-date {
+      margin-top: 5px;
+
+      font-size: 9px;
+
+      color: var(--muted);
+    }
+
+    .certificate-actions {
+      display: flex;
+      gap: 7px;
+
+      margin-top: 12px;
+    }
+
+    /* =========================
+       TOGGLE
+    ========================= */
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 13px 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toggle-row:last-child {
+      border-bottom: 0;
+    }
+
+    .toggle-title {
+      font-size: 12px;
+    }
+
+    .toggle-description {
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    .toggle {
+      position: relative;
+
+      width: 42px;
+      height: 23px;
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+
+      cursor: pointer;
+
+      background: #1e293b;
+
+      border-radius: 30px;
+
+      transition: 0.25s;
+    }
+
+    .slider::before {
+      content: "";
+
+      position: absolute;
+
+      width: 17px;
+      height: 17px;
+
+      left: 3px;
+      top: 3px;
+
+      border-radius: 50%;
+
+      background: #94a3b8;
+
+      transition: 0.25s;
+    }
+
+    .toggle input:checked + .slider {
+      background: rgba(0, 229, 255, 0.25);
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(19px);
+
+      background: var(--accent);
+
+      box-shadow: 0 0 10px var(--glow);
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty-state {
+      text-align: center;
+
+      padding: 45px 20px;
+
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .empty-state h3 {
+      color: #cbd5e1;
+
+      font-size: 14px;
+    }
+
+    .empty-state p {
+      margin-top: 5px;
+
+      font-size: 10px;
+    }
+
+    /* =========================
+       MOBILE OVERLAY
+    ========================= */
+
+    .sidebar-overlay {
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(0, 0, 0, 0.65);
+
+      z-index: 90;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+
+      right: 22px;
+      bottom: 22px;
+
+      max-width: 320px;
+
+      padding: 12px 15px;
+
+      border-radius: 10px;
+
+      border: 1px solid rgba(34, 197, 94, 0.25);
+
+      background: #07100c;
+
+      color: #86efac;
+
+      font-size: 11px;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+      transform: translateY(20px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: 0.25s ease;
+
+      z-index: 999;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .certificate-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      :root {
+        --sidebar-width: 260px;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.show {
+        display: block;
+      }
+
+      .main {
+        width: 100%;
+        margin-left: 0;
+
+        padding: 18px;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .topbar {
+        margin-bottom: 22px;
+      }
+
+      .profile-info {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main {
+        padding: 14px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 15px;
+      }
+
+      .stat-value {
+        font-size: 23px;
+      }
+
+      .stat-icon {
+        width: 33px;
+        height: 33px;
+
+        font-size: 14px;
+      }
+
+      .section-toolbar {
+        align-items: flex-start;
+
+        gap: 12px;
+
+        flex-direction: column;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .certificate-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-header,
+      .panel-body {
+        padding: 15px;
+      }
+
+      .topbar-left {
+        gap: 9px;
+      }
+
+      .page-title p {
+        display: none;
+      }
+
+      .profile-avatar {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <div class="brand-logo">RK</div>
+
+        <div class="brand-text">
+          <h2>Ranjithkumar</h2>
+          <p>ADMIN PANEL</p>
+        </div>
+      </div>
+
+      <div class="menu-label">
+        Management
+      </div>
+
+      <nav class="nav-menu">
+
+        <button
+          class="nav-item active"
+          data-section="dashboard"
+        >
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="about"
+        >
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">About Me</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="skills"
+        >
+          <span class="nav-icon">🛠️</span>
+          <span class="nav-text">Skills</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="projects"
+        >
+          <span class="nav-icon">🚀</span>
+          <span class="nav-text">Projects</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="certificates"
+        >
+          <span class="nav-icon">🏆</span>
+          <span class="nav-text">Certificates</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="education"
+        >
+          <span class="nav-icon">🎓</span>
+          <span class="nav-text">Education</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="resume"
+        >
+          <span class="nav-icon">📄</span>
+          <span class="nav-text">Resume</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="messages"
+        >
+          <span class="nav-icon">📩</span>
+          <span class="nav-text">Messages</span>
+        </button>
+
+      </nav>
+
+      <div class="menu-label" style="margin-top:24px;">
+        System
+      </div>
+
+      <nav class="nav-menu">
+
+        <button
+          class="nav-item"
+          data-section="settings"
+        >
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-text">Settings</span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+        <a
+          class="view-site"
+          href="../index.html"
+          target="_blank"
+        >
+          🌐 View Portfolio
+        </a>
+
+        <button
+          class="logout-btn"
+          id="logoutBtn"
+        >
+          ↪ Logout
+        </button>
+
+      </div>
+
+    </aside>
+
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+    ></div>
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+          >
+            ☰
+          </button>
+
+          <div class="page-title">
+            <h1 id="pageTitle">
+              Dashboard
+            </h1>
+
+            <p id="pageSubtitle">
+              Manage your portfolio from one place
+            </p>
+          </div>
+
+        </div>
+
+        <div class="profile">
+
+          <div class="profile-avatar">
+            RK
+          </div>
+
+          <div class="profile-info">
+
+            <span class="profile-name">
+              Ranjithkumar R
+            </span>
+
+            <span class="profile-role">
+              ADMINISTRATOR
+            </span>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =========================
+           DASHBOARD
+      ========================= -->
+
+      <section
+        class="section active"
+        id="section-dashboard"
+      >
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <span class="stat-label">
+                Projects
+              </span>
+
+              <div class="stat-icon">
+                🚀
+              </div>
+
+            </div>
+
+            <div
+              class="stat-value"
+              id="projectCount"
+            >
+              3
+            </div>
+
+            <div class="stat-note">
+              Portfolio projects
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <span class="stat-label">
+                Skills
+              </span>
+
+              <div class="stat-icon">
+                🛠️
+              </div>
+
+            </div>
+
+            <div
+              class="stat-value"
+              id="skillCount"
+            >
+              8
+            </div>
+
+            <div class="stat-note">
+              Technical skills
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <span class="stat-label">
+                Certificates
+              </span>
+
+              <div class="stat-icon">
+                🏆
+              </div>
+
+            </div>
+
+            <div
+              class="stat-value"
+              id="certificateCount"
+            >
+              1
+            </div>
+
+            <div class="stat-note">
+              Achievements
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <span class="stat-label">
+                Messages
+              </span>
+
+              <div class="stat-icon">
+                📩
+              </div>
+
+            </div>
+
+            <div
+              class="stat-value"
+              id="messageCount"
+            >
+              0
+            </div>
+
+            <div class="stat-note">
+              Contact messages
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="content-grid">
+
+          <!-- PROJECTS -->
+
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <div>
+                <div class="panel-title">
+                  Recent Projects
+                </div>
+
+                <div class="panel-subtitle">
+                  Your latest portfolio projects
+                </div>
+              </div>
+
+              <button
+                class="secondary-btn"
+                data-open="projects"
+              >
+                View All
+              </button>
+
+            </div>
+
+            <div class="panel-body">
+
+              <div class="project-list">
+
+                <div class="project-item">
+
+                  <div class="project-info">
+
+                    <div class="project-icon">
+                      🍔
+                    </div>
+
+                    <div>
+
+                      <div class="project-name">
+                        TastyBite
+                      </div>
+
+                      <div class="project-tech">
+                        React · Node · MongoDB
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <span class="status live">
+                    LIVE
+                  </span>
+
+                </div>
+
+
+                <div class="project-item">
+
+                  <div class="project-info">
+
+                    <div class="project-icon">
+                      👕
+                    </div>
+
+                    <div>
+
+                      <div class="project-name">
+                        URBAN Menswear
+                      </div>
+
+                      <div class="project-tech">
+                        React · Tailwind
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <span class="status draft">
+                    DEVELOPMENT
+                  </span>
+
+                </div>
+
+
+                <div class="project-item">
+
+                  <div class="project-info">
+
+                    <div class="project-icon">
+                      🤖
+                    </div>
+
+                    <div>
+
+                      <div class="project-name">
+                        AI Automation
+                      </div>
+
+                      <div class="project-tech">
+                        n8n · APIs · AI
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <span class="status live">
+                    ACTIVE
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACTIVITY -->
+
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <div class="panel-title">
+                  Recent Activity
+                </div>
+
+                <div class="panel-subtitle">
+                  Latest admin actions
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="panel-body">
+
+              <div class="activity-list">
+
+                <div class="activity-item">
+
+                  <span class="activity-dot"></span>
+
+                  <div>
+
+                    <div class="activity-text">
+                      Portfolio admin panel initialized
+                    </div>
+
+                    <div class="activity-time">
+                      Just now
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                  <span class="activity-dot"></span>
+
+                  <div>
+
+                    <div class="activity-text">
+                      Certificate section ready
+                    </div>
+
+                    <div class="activity-time">
+                      Today
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                  <span class="activity-dot"></span>
+
+                  <div>
+
+                    <div class="activity-text">
+                      Mobile responsive layout enabled
+                    </div>
+
+                    <div class="activity-time">
+                      Today
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           ABOUT
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-about"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              About Me
+            </h2>
+
+            <p>
+              Update the information displayed in your portfolio.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="saveAboutBtn"
+          >
+            ✓ Save Changes
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-body">
+
+            <div class="form-grid">
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Full Name
+                </label>
+
+                <input
+                  class="form-input"
+                  id="aboutName"
+                  value="Ranjithkumar R"
+                />
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Professional Title
+                </label>
+
+                <input
+                  class="form-input"
+                  id="aboutTitle"
+                  value="AI Automation Engineer"
+                />
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label class="form-label">
+                  Short Introduction
+                </label>
+
+                <textarea
+                  class="form-textarea"
+                  id="aboutIntro"
+                >B.Tech AI & Data Science graduate passionate about AI Automation, Cloud and DevOps.</textarea>
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label class="form-label">
+                  About Description
+                </label>
+
+                <textarea
+                  class="form-textarea"
+                  id="aboutDescription"
+                >I build practical applications using modern web technologies, cloud platforms and AI automation tools.</textarea>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           SKILLS
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-skills"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Skills
+            </h2>
+
+            <p>
+              Manage your technical skills.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="addSkillBtn"
+          >
+            + Add Skill
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="table-wrap">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>Skill</th>
+                  <th>Category</th>
+                  <th>Level</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="skillsTable">
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      AWS
+                    </div>
+                  </td>
+
+                  <td>
+                    Cloud
+                  </td>
+
+                  <td>
+                    Intermediate
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      Linux
+                    </div>
+                  </td>
+
+                  <td>
+                    DevOps
+                  </td>
+
+                  <td>
+                    Intermediate
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      Python
+                    </div>
+                  </td>
+
+                  <td>
+                    Programming
+                  </td>
+
+                  <td>
+                    Intermediate
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      React
+                    </div>
+                  </td>
+
+                  <td>
+                    Frontend
+                  </td>
+
+                  <td>
+                    Intermediate
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           PROJECTS
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-projects"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Projects
+            </h2>
+
+            <p>
+              Add and manage your portfolio projects.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="addProjectBtn"
+          >
+            + Add Project
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="table-wrap">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>Project</th>
+                  <th>Technology</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      TastyBite
+                    </div>
+
+                    <div class="table-muted">
+                      Food delivery application
+                    </div>
+                  </td>
+
+                  <td>
+                    React / Node / MongoDB
+                  </td>
+
+                  <td>
+                    <span class="status live">
+                      LIVE
+                    </span>
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      URBAN Menswear
+                    </div>
+
+                    <div class="table-muted">
+                      Men's ecommerce application
+                    </div>
+                  </td>
+
+                  <td>
+                    React / Tailwind
+                  </td>
+
+                  <td>
+                    <span class="status draft">
+                      DEVELOPMENT
+                    </span>
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           CERTIFICATES
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-certificates"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Certificates
+            </h2>
+
+            <p>
+              Manage certificates displayed on your portfolio.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="addCertificateBtn"
+          >
+            + Add Certificate
+          </button>
+
+        </div>
+
+
+        <div class="certificate-grid">
+
+          <div class="certificate-card">
+
+            <div class="certificate-image">
+              🏆
+            </div>
+
+            <div class="certificate-content">
+
+              <div class="certificate-title">
+                Big Data & Deep Learning Foundations
+              </div>
+
+              <div class="certificate-issuer">
+                Digilabs
+              </div>
+
+              <div class="certificate-date">
+                Issued: October 25, 2025
+              </div>
+
+              <div class="certificate-actions">
+
+                <button class="secondary-btn">
+                  ✏️ Edit
+                </button>
+
+                <button class="icon-btn delete">
+                  🗑
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           EDUCATION
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-education"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Education
+            </h2>
+
+            <p>
+              Manage your academic information.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="addEducationBtn"
+          >
+            + Add Education
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="table-wrap">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>Qualification</th>
+                  <th>Institution</th>
+                  <th>Year</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr>
+
+                  <td>
+                    <div class="table-title">
+                      B.Tech AI & Data Science
+                    </div>
+                  </td>
+
+                  <td>
+                    University / College
+                  </td>
+
+                  <td>
+                    2026
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button class="icon-btn">
+                        ✏️
+                      </button>
+
+                      <button class="icon-btn delete">
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           RESUME
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-resume"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Resume
+            </h2>
+
+            <p>
+              Manage your portfolio resume.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-body">
+
+            <div class="form-grid">
+
+              <div class="form-group full">
+
+                <label class="form-label">
+                  Current Resume
+                </label>
+
+                <input
+                  class="form-input"
+                  value="resume.pdf"
+                  readonly
+                />
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Resume Display Name
+                </label>
+
+                <input
+                  class="form-input"
+                  value="Ranjithkumar Resume"
+                />
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Resume Version
+                </label>
+
+                <input
+                  class="form-input"
+                  value="2026"
+                />
+
+              </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+              <button class="secondary-btn">
+                📥 Download Current
+              </button>
+
+              <button
+                class="primary-btn"
+                id="uploadResumeBtn"
+              >
+                ⬆ Upload Resume
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           MESSAGES
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-messages"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Contact Messages
+            </h2>
+
+            <p>
+              Messages received through your portfolio.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="empty-state">
+
+            <div class="empty-icon">
+              📩
+            </div>
+
+            <h3>
+              No messages yet
+            </h3>
+
+            <p>
+              New contact form submissions will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           SETTINGS
+      ========================= -->
+
+      <section
+        class="section"
+        id="section-settings"
+      >
+
+        <div class="section-toolbar">
+
+          <div class="section-heading">
+
+            <h2>
+              Settings
+            </h2>
+
+            <p>
+              Configure your portfolio administration.
+            </p>
+
+          </div>
+
+          <button
+            class="primary-btn"
+            id="saveSettingsBtn"
+          >
+            ✓ Save Settings
+          </button>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-body">
+
+            <div class="toggle-row">
+
+              <div>
+
+                <div class="toggle-title">
+                  Portfolio Visibility
+                </div>
+
+                <div class="toggle-description">
+                  Show your portfolio publicly.
+                </div>
+
+              </div>
+
+              <label class="toggle">
+
+                <input
+                  type="checkbox"
+                  checked
+                />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+              <div>
+
+                <div class="toggle-title">
+                  Show Certificates
+                </div>
+
+                <div class="toggle-description">
+                  Display certificates section on portfolio.
+                </div>
+
+              </div>
+
+              <label class="toggle">
+
+                <input
+                  type="checkbox"
+                  checked
+                />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+              <div>
+
+                <div class="toggle-title">
+                  Show Projects
+                </div>
+
+                <div class="toggle-description">
+                  Display projects on your public portfolio.
+                </div>
+
+              </div>
+
+              <label class="toggle">
+
+                <input
+                  type="checkbox"
+                  checked
+                />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+              <div>
+
+                <div class="toggle-title">
+                  Maintenance Mode
+                </div>
+
+                <div class="toggle-description">
+                  Temporarily hide the public portfolio.
+                </div>
+
+              </div>
+
+              <label class="toggle">
+
+                <input
+                  type="checkbox"
+                />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+  >
+    Changes saved successfully.
+  </div>
+
+
+  <script>
+    /*
+      ==========================================
+      ADMIN PANEL V1
+      ==========================================
+
+      This version is the frontend UI.
+
+      Backend/database authentication will be
+      connected in the next stage.
+    */
+
+
+    const navItems =
+      document.querySelectorAll(".nav-item");
+
+    const sections =
+      document.querySelectorAll(".section");
+
+    const pageTitle =
+      document.getElementById("pageTitle");
+
+    const pageSubtitle =
+      document.getElementById("pageSubtitle");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    const sidebarOverlay =
+      document.getElementById("sidebarOverlay");
+
+    const mobileMenuBtn =
+      document.getElementById("mobileMenuBtn");
+
+
+    const sectionData = {
+
+      dashboard: {
+        title: "Dashboard",
+        subtitle:
+          "Manage your portfolio from one place"
+      },
+
+      about: {
+        title: "About Me",
+        subtitle:
+          "Update your personal portfolio information"
+      },
+
+      skills: {
+        title: "Skills",
+        subtitle:
+          "Manage your technical skills"
+      },
+
+      projects: {
+        title: "Projects",
+        subtitle:
+          "Manage your portfolio projects"
+      },
+
+      certificates: {
+        title: "Certificates",
+        subtitle:
+          "Manage your certificates and achievements"
+      },
+
+      education: {
+        title: "Education",
+        subtitle:
+          "Manage your academic information"
+      },
+
+      resume: {
+        title: "Resume",
+        subtitle:
+          "Manage your portfolio resume"
+      },
+
+      messages: {
+        title: "Messages",
+        subtitle:
+          "View messages from your portfolio"
+      },
+
+      settings: {
+        title: "Settings",
+        subtitle:
+          "Configure your portfolio"
+      }
+
+    };
+
+
+    function openSection(sectionName) {
+
+      navItems.forEach(item => {
+
+        item.classList.toggle(
+          "active",
+          item.dataset.section === sectionName
+        );
+
+      });
+
+
+      sections.forEach(section => {
+
+        section.classList.toggle(
+          "active",
+          section.id ===
+            `section-${sectionName}`
+        );
+
+      });
+
+
+      const data =
+        sectionData[sectionName];
+
+      if (data) {
+
+        pageTitle.textContent =
+          data.title;
+
+        pageSubtitle.textContent =
+          data.subtitle;
+
+      }
+
+
+      closeMobileMenu();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    navItems.forEach(item => {
+
+      item.addEventListener(
+        "click",
+        () => {
+
+          openSection(
+            item.dataset.section
+          );
+
+        }
+      );
+
+    });
+
+
+    /*
+      Dashboard buttons
+    */
+
+    document
+      .querySelectorAll("[data-open]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openSection(
+              button.dataset.open
+            );
+
+          }
+        );
+
+      });
+
+
+    /*
+      Mobile menu
+    */
+
+    function openMobileMenu() {
+
+      sidebar.classList.add("open");
+
+      sidebarOverlay.classList.add("show");
+
+    }
+
+
+    function closeMobileMenu() {
+
+      sidebar.classList.remove("open");
+
+      sidebarOverlay.classList.remove("show");
+
+    }
+
+
+    mobileMenuBtn.addEventListener(
+      "click",
+      openMobileMenu
+    );
+
+
+    sidebarOverlay.addEventListener(
+      "click",
+      closeMobileMenu
+    );
+
+
+    /*
+      Toast
+    */
+
+    const toast =
+      document.getElementById("toast");
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 2500);
+
+    }
+
+
+    /*
+      About save
+    */
+
+    document
+      .getElementById("saveAboutBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "About information saved successfully."
+          );
+
+        }
+      );
+
+
+    /*
+      Settings save
+    */
+
+    document
+      .getElementById("saveSettingsBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Settings saved successfully."
+          );
+
+        }
+      );
+
+
+    /*
+      Add buttons
+    */
+
+    document
+      .getElementById("addSkillBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Skill editor will be connected next."
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("addProjectBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Project editor will be connected next."
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("addCertificateBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Certificate editor will be connected next."
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("addEducationBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Education editor will be connected next."
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("uploadResumeBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "Resume upload will be connected to the backend next."
+          );
+
+        }
+      );
+
+
+    /*
+      Logout placeholder
+    */
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          const confirmLogout =
+            window.confirm(
+              "Are you sure you want to logout?"
+            );
+
+          if (confirmLogout) {
+
+            showToast(
+              "Logout authentication will be connected next."
+            );
+
+          }
+
+        }
+      );
+
+
+    /*
+      Delete buttons
+    */
+
+    document
+      .querySelectorAll(".delete")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const confirmed =
+              window.confirm(
+                "Are you sure you want to delete this item?"
+              );
+
+            if (confirmed) {
+
+              showToast(
+                "Delete action will be connected to the database next."
+              );
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /*
+      Prevent demo form fields from
+      accidentally submitting.
+    */
+
+    document
+      .querySelectorAll("form")
+      .forEach(form => {
+
+        form.addEventListener(
+          "submit",
+          event => {
+
+            event.preventDefault();
+
+          }
+        );
+
+      });
+
+  </script>
+
+</body>
+</html>
