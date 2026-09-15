@@ -807,6 +807,40 @@
       gap: 0.5rem;
     }
 
+    /* ── CERTIFICATE PREVIEW ── */
+    .certificate-preview {
+      margin-top: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .certificate-preview:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 28px var(--glow);
+      transform: translateY(-3px);
+    }
+
+    .certificate-preview img {
+      display: block;
+      width: min(100%, 760px);
+      max-height: 720px;
+      object-fit: contain;
+      margin: 0 auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .certificate-caption {
+      margin-top: 0.9rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
     /* ── CONTACT ── */
     #contact {
       padding: 6rem 0;
@@ -1183,6 +1217,189 @@
         display: none;
       }
     }
+  
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      html {
+        scroll-padding-top: 80px;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: min(92%, 1100px);
+      }
+
+      nav {
+        padding: 0.8rem 4%;
+      }
+
+      nav .nav-links {
+        gap: 0.65rem;
+      }
+
+      nav .nav-links a {
+        font-size: 0.72rem;
+      }
+
+      nav .nav-links .nav-resume {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.68rem;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 7rem 0 4rem;
+      }
+
+      .hero .hero-name {
+        font-size: clamp(2.1rem, 10vw, 4rem);
+        line-height: 1.05;
+        word-break: break-word;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      .hero .hero-cta {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero .hero-cta a,
+      .hero .hero-cta button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .section-title {
+        font-size: 1.7rem;
+      }
+
+      .about-grid,
+      .projects-grid,
+      .skills-grid,
+      .education-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.1rem;
+      }
+
+      .project-card,
+      .skill-card,
+      .education-card {
+        width: 100%;
+      }
+
+      .project-card {
+        padding: 1.15rem;
+      }
+
+      .cert-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .cert-pill {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      .certificate-preview {
+        margin-top: 1.25rem;
+        padding: 0.7rem;
+        border-radius: 12px;
+      }
+
+      .certificate-preview img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        border-radius: 7px;
+      }
+
+      .certificate-caption {
+        font-size: 0.68rem;
+        line-height: 1.5;
+        padding: 0 0.25rem 0.25rem;
+      }
+
+      .contact-form {
+        width: 100%;
+      }
+
+      input,
+      textarea,
+      button {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 520px) {
+      nav {
+        padding: 0.7rem 4%;
+      }
+
+      nav .nav-links {
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      nav .nav-links a:not(.resume-btn) {
+        display: none;
+      }
+
+      nav .nav-links .nav-resume {
+        font-size: 0.65rem;
+        padding: 0.48rem 0.65rem;
+      }
+
+      .hero {
+        padding-top: 6.5rem;
+      }
+
+      .hero .hero-name {
+        font-size: 2.35rem;
+      }
+
+      .hero p {
+        font-size: 0.88rem;
+      }
+
+      section {
+        padding: 3.2rem 0;
+      }
+
+      .section-title {
+        font-size: 1.45rem;
+      }
+
+      .certificate-preview {
+        padding: 0.5rem;
+      }
+
+      .cert-pill {
+        font-size: 0.75rem;
+      }
+    }
+
   </style>
 </head>
 
@@ -1415,7 +1632,7 @@
           <p>
             I'm fluent in
             <strong>English &amp; Tamil</strong>,
-            certified in IBM Cloud, and always building something new.
+            certified in Big Data &amp; Deep Learning Foundations, and always building something new.
           </p>
 
         </div>
@@ -1465,11 +1682,11 @@
           <div class="stat-card">
 
             <div class="stat-num">
-              IBM
+              1
             </div>
 
             <div class="stat-label">
-              Cloud Certified
+              Certification
             </div>
 
           </div>
@@ -1961,13 +2178,24 @@
       <div class="cert-row reveal">
 
         <div class="cert-pill">
-          🏅 IBM Cloud Certification
+          🏅 Big Data &amp; Deep Learning Foundations
         </div>
 
         <div class="cert-pill">
           🌐 Languages: English &amp; Tamil
         </div>
 
+      </div>
+
+      <div class="certificate-preview reveal">
+        <img
+          src="certificate.jpg"
+          alt="Big Data &amp; Deep Learning Foundations certificate awarded to Ranjithkumar R"
+          loading="lazy"
+        />
+        <div class="certificate-caption">
+          Big Data &amp; Deep Learning Foundations · Digilabs · Issued Oct 25, 2025
+        </div>
       </div>
 
     </div>
