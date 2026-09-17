@@ -158,122 +158,159 @@
 
 
     /* =========================================================
-       NAVBAR
+       NAVBAR — FLOATING GLASS / HUD
     ========================================================= */
 
     nav {
       position: fixed;
-
-      top: 0;
-      left: 0;
-      right: 0;
-
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1120px, calc(100% - 32px));
       z-index: 100;
 
       display: flex;
-
       justify-content: space-between;
       align-items: center;
+      gap: 1.5rem;
+      padding: .75rem .85rem .75rem 1.15rem;
 
-      padding: 1rem 2.5rem;
+      background: rgba(5, 9, 16, .68);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid rgba(0,229,255,.16);
+      border-radius: 16px;
+      box-shadow:
+        0 14px 50px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 0 30px rgba(0,229,255,.035);
+    }
 
-      background: rgba(8,12,20,0.7);
-
-      backdrop-filter: blur(16px);
-
-      border-bottom: 1px solid var(--border);
+    nav::before {
+      content: '';
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: -1px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+      opacity: .55;
     }
 
     .nav-logo {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      flex-shrink: 0;
       font-family: 'JetBrains Mono', monospace;
-
       font-weight: 600;
-
-      font-size: 1rem;
-
+      font-size: .92rem;
       color: var(--accent);
+      letter-spacing: .04em;
+      text-shadow: 0 0 16px rgba(0,229,255,.35);
+    }
 
-      letter-spacing: 0.05em;
+    .nav-logo::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,.8);
+      animation: navPulse 1.8s infinite;
+    }
+
+    @keyframes navPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .45; transform: scale(.72); }
     }
 
     .nav-links {
       display: flex;
-
-      gap: 2rem;
-
       align-items: center;
+      justify-content: flex-end;
+      gap: .2rem;
     }
 
     .nav-links a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .42rem;
+      padding: .55rem .68rem;
+      border-radius: 9px;
       text-decoration: none;
+      color: #8491a5;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .69rem;
+      font-weight: 600;
+      letter-spacing: .01em;
+      transition: color .2s, background .2s, transform .2s, box-shadow .2s;
+    }
 
-      color: var(--muted);
+    .nav-links a:not(.nav-resume)::before {
+      content: attr(data-num);
+      color: rgba(0,229,255,.42);
+      font-size: .57rem;
+    }
 
-      font-size: 0.875rem;
-
-      font-weight: 500;
-
-      transition: color 0.2s;
+    .nav-links a:not(.nav-resume)::after {
+      content: '';
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: 3px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s ease;
     }
 
     .nav-links a:hover {
+      color: var(--text);
+      background: rgba(0,229,255,.055);
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(0,229,255,.06);
+    }
+
+    .nav-links a:hover::before {
       color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
     }
 
     .nav-resume {
       display: inline-flex !important;
-
       align-items: center;
       justify-content: center;
-
-      gap: 0.45rem;
-
-      padding: 0.55rem 1rem;
-
-      border-radius: 8px;
-
+      gap: .42rem;
+      margin-left: .35rem;
+      padding: .58rem .9rem !important;
+      border-radius: 9px !important;
       text-decoration: none;
-
       color: #03050a !important;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent),
-          #67e8f9
-        );
-
+      background: linear-gradient(135deg, var(--accent), #67e8f9);
       font-family: 'JetBrains Mono', monospace;
-
-      font-size: 0.75rem !important;
-
-      font-weight: 700 !important;
-
-      border: 1px solid rgba(0,229,255,0.5);
-
-      box-shadow:
-        0 0 18px rgba(0,229,255,0.16);
-
-      transition:
-        transform 0.2s,
-        box-shadow 0.2s,
-        filter 0.2s;
-
+      font-size: .68rem !important;
+      font-weight: 800 !important;
+      border: 1px solid rgba(0,229,255,.5);
+      box-shadow: 0 0 18px rgba(0,229,255,.16);
+      transition: transform .2s, box-shadow .2s, filter .2s;
       white-space: nowrap;
     }
 
     .nav-resume:hover {
       color: #03050a !important;
-
-      transform: translateY(-2px);
-
+      transform: translateY(-2px) !important;
       filter: brightness(1.08);
-
       box-shadow:
-        0 0 18px rgba(0,229,255,0.35),
-        0 0 35px rgba(124,58,237,0.18);
+        0 0 18px rgba(0,229,255,.38),
+        0 0 35px rgba(124,58,237,.2);
     }
-
 
     /* =========================================================
        SECTIONS
@@ -654,7 +691,8 @@
 
     #skills {
       padding: 6rem 0;
-      background: transparent;
+
+      background: transparent !important;
     }
 
     .skills-grid {
@@ -764,8 +802,8 @@
     ========================================================= */
 
     #projects {
+  background: transparent !important;
       padding: 6rem 0;
-      background: transparent;
     }
 
     .projects-grid {
@@ -1329,7 +1367,8 @@
 
     #education {
       padding: 6rem 0;
-      background: transparent;
+
+      background: transparent !important;
     }
 
     .edu-card {
@@ -2071,15 +2110,18 @@
     @media (max-width: 768px) {
 
       nav {
-        padding: .8rem 4%;
+        top: 12px;
+        width: calc(100% - 24px);
+        padding: .65rem .7rem .65rem .85rem;
       }
 
       .nav-links {
-        gap: .65rem;
+        gap: .05rem;
       }
 
       .nav-links a {
-        font-size: .72rem;
+        padding: .48rem .42rem;
+        font-size: .62rem;
       }
 
       .nav-resume {
@@ -2220,11 +2262,13 @@
     @media (max-width: 520px) {
 
       nav {
-        padding: .7rem 4%;
+        top: 9px;
+        width: calc(100% - 18px);
+        padding: .58rem .6rem .58rem .75rem;
       }
 
       nav .nav-links {
-        gap: .4rem;
+        gap: .15rem;
       }
 
       nav .nav-links a:not(.nav-resume) {
@@ -2382,7 +2426,7 @@
        NAVBAR
   ======================================================== -->
 
-  <nav>
+  <nav aria-label="Primary navigation">
 
     <div class="nav-logo">
       &lt;ranjith /&gt;
@@ -2390,35 +2434,17 @@
 
     <div class="nav-links">
 
-      <a href="#about">
-        About
-      </a>
-
-      <a href="#skills">
-        Skills
-      </a>
-
-      <a href="#projects">
-        Projects
-      </a>
-
-      <a href="#education">
-        Education
-      </a>
-
-      <a href="#contact">
-        Contact
-      </a>
+      <a href="#about" data-num="01">About</a>
+      <a href="#skills" data-num="02">Skills</a>
+      <a href="#projects" data-num="03">Projects</a>
+      <a href="#education" data-num="04">Education</a>
+      <a href="#contact" data-num="05">Contact</a>
 
       <a
         href="Ranjithkumar-resume.pdf"
         class="nav-resume"
         download="Ranjithkumar-Resume.pdf">
-
-        <span>↓</span>
-
-        Resume
-
+        <span>↓</span> Resume
       </a>
 
     </div>
