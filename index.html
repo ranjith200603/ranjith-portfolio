@@ -3300,65 +3300,53 @@
 
       <div class="cert-row reveal">
 
-        <button
-          type="button"
-          class="cert-pill"
-          id="certificateButton"
-          aria-haspopup="dialog"
-          aria-controls="certificateModal">
-
-          <span>
-            🏅
-          </span>
-
-          <span>
-            Big Data &amp; Deep Learning Foundations
-          </span>
-
-          <span class="cert-click-text">
-            View →
-          </span>
-
+        <!-- CERTIFICATE 1 -->
+        <button type="button" class="cert-pill certificate-card"
+          data-title="Big Data &amp; Deep Learning Foundations"
+          data-issuer="Digilabs"
+          data-date="October 25, 2025"
+          data-image="certificate.jpg"
+          data-skills="Big Data,Deep Learning,Artificial Intelligence,Data Science,Machine Learning"
+          aria-haspopup="dialog" aria-controls="certificateModal">
+          <span>🏅</span>
+          <span>Big Data &amp; Deep Learning Foundations</span>
+          <span class="cert-click-text">View →</span>
         </button>
 
+        <!-- CERTIFICATE 2 -->
+        <button type="button" class="cert-pill certificate-card"
+          data-title="AWS Cloud Practitioner"
+          data-issuer="Amazon Web Services"
+          data-date="September 2026"
+          data-image="aws-certificate.jpg"
+          data-skills="AWS,Cloud,EC2,S3,VPC"
+          aria-haspopup="dialog" aria-controls="certificateModal">
+          <span>☁️</span>
+          <span>AWS Cloud Practitioner</span>
+          <span class="cert-click-text">View →</span>
+        </button>
+
+        <!-- CERTIFICATE 3 -->
+        <button type="button" class="cert-pill certificate-card"
+          data-title="Python Programming"
+          data-issuer="Your Organization"
+          data-date="2026"
+          data-image="python-certificate.jpg"
+          data-skills="Python,Programming,Problem Solving"
+          aria-haspopup="dialog" aria-controls="certificateModal">
+          <span>🐍</span>
+          <span>Python Programming</span>
+          <span class="cert-click-text">View →</span>
+        </button>
 
         <div class="cert-pill">
-
-          <span>
-            🌐
-          </span>
-
-          <span>
-            Languages: English &amp; Tamil
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <!--
-        Certificate image is intentionally hidden here.
-
-        It will appear inside the certificate information
-        modal after the user clicks the certificate bar.
-      -->
-
-      <div class="certificate-preview">
-
-        <img
-          src="certificate.jpg"
-          alt="Big Data & Deep Learning Foundations certificate awarded to Ranjithkumar R"
-        />
-
-        <div class="certificate-caption">
-          Big Data &amp; Deep Learning Foundations · Digilabs · Issued Oct 25, 2025
+          <span>🌐</span>
+          <span>Languages: English &amp; Tamil</span>
         </div>
 
       </div>
 
     </div>
-
   </section>
 
 
@@ -3366,175 +3354,51 @@
        CERTIFICATE INFORMATION MODAL
   ======================================================== -->
 
-  <div
-    class="certificate-modal"
-    id="certificateModal"
-    aria-hidden="true">
+  <div class="certificate-modal" id="certificateModal" aria-hidden="true">
+    <div class="certificate-modal-content" role="dialog" aria-modal="true" aria-labelledby="certificateModalTitle">
 
-    <div
-      class="certificate-modal-content"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="certificateModalTitle">
+      <button type="button" class="certificate-close" id="certificateClose" aria-label="Close certificate information">&times;</button>
 
-      <button
-        type="button"
-        class="certificate-close"
-        id="certificateClose"
-        aria-label="Close certificate information">
+      <p class="certificate-modal-label">01 — Certification</p>
 
-        &times;
+      <h2 class="certificate-modal-title" id="certificateModalTitle">Certificate</h2>
 
-      </button>
-
-
-      <p class="certificate-modal-label">
-        01 — Certification
-      </p>
-
-
-      <h2
-        class="certificate-modal-title"
-        id="certificateModalTitle">
-
-        Big Data &amp; Deep Learning Foundations
-
-      </h2>
-
-
-      <p class="certificate-modal-subtitle">
-
-        Professional certification earned by
-        Ranjithkumar R.
-
-      </p>
-
-
-      <!-- CERTIFICATE INFORMATION -->
+      <p class="certificate-modal-subtitle">Professional certification earned by Ranjithkumar R.</p>
 
       <div class="certificate-info-grid">
-
-
         <div class="certificate-info-card">
-
-          <h4>
-            Certificate
-          </h4>
-
-          <p>
-            Big Data &amp; Deep Learning Foundations
-          </p>
-
+          <h4>Certificate</h4>
+          <p id="certificateName">—</p>
         </div>
-
-
         <div class="certificate-info-card">
-
-          <h4>
-            Issuing Organization
-          </h4>
-
-          <p>
-            Digilabs
-          </p>
-
+          <h4>Issuing Organization</h4>
+          <p id="certificateIssuer">—</p>
         </div>
-
-
         <div class="certificate-info-card">
-
-          <h4>
-            Issue Date
-          </h4>
-
-          <p>
-            October 25, 2025
-          </p>
-
+          <h4>Issue Date</h4>
+          <p id="certificateDate">—</p>
         </div>
-
-
         <div class="certificate-info-card">
-
-          <h4>
-            Recipient
-          </h4>
-
-          <p>
-            Ranjithkumar R
-          </p>
-
+          <h4>Recipient</h4>
+          <p>Ranjithkumar R</p>
         </div>
-
-
       </div>
-
-
-      <!-- SKILLS -->
 
       <div class="modal-block">
-
-        <h4>
-          Skills / Topics
-        </h4>
-
-        <div class="certificate-skills">
-
-          <span>
-            Big Data
-          </span>
-
-          <span>
-            Deep Learning
-          </span>
-
-          <span>
-            Artificial Intelligence
-          </span>
-
-          <span>
-            Data Science
-          </span>
-
-          <span>
-            Machine Learning
-          </span>
-
-        </div>
-
+        <h4>Skills / Topics</h4>
+        <div class="certificate-skills" id="certificateSkills"></div>
       </div>
-
-
-      <!-- CERTIFICATE IMAGE -->
 
       <div class="certificate-image-wrapper">
-
-        <img
-          src="certificate-1.jpg"
-          alt="Big Data and Deep Learning Foundations certificate">
-
-        <div class="certificate-image-caption">
-
-          Big Data &amp; Deep Learning Foundations
-          · Digilabs
-          · Issued Oct 25, 2025
-
-        </div>
-
+        <img id="certificateImage" src="" alt="Certificate">
+        <div class="certificate-image-caption" id="certificateCaption">Certificate</div>
       </div>
 
-
-      <div class="certificate-note">
-
-        This certification demonstrates additional learning
-        in Big Data and Deep Learning foundations and supports
-        my interests in Artificial Intelligence, automation,
-        and data-driven application development.
-
+      <div class="certificate-note" id="certificateNote">
+        This certification demonstrates additional professional learning and supports my interests in Artificial Intelligence, automation, cloud computing, and software development.
       </div>
 
     </div>
-
   </div>
 
 
@@ -4200,102 +4064,62 @@
 
 
     /* =======================================================
-       CERTIFICATE MODAL
+       MULTIPLE CERTIFICATE SYSTEM
     ======================================================== */
 
-    const certificateButton =
-      document.getElementById(
-        'certificateButton'
-      );
+    const certificateModal = document.getElementById('certificateModal');
+    const certificateClose = document.getElementById('certificateClose');
+    const certificateTitle = document.getElementById('certificateModalTitle');
+    const certificateName = document.getElementById('certificateName');
+    const certificateIssuer = document.getElementById('certificateIssuer');
+    const certificateDate = document.getElementById('certificateDate');
+    const certificateImage = document.getElementById('certificateImage');
+    const certificateCaption = document.getElementById('certificateCaption');
+    const certificateSkills = document.getElementById('certificateSkills');
+    const certificateCards = document.querySelectorAll('.certificate-card');
 
-    const certificateModal =
-      document.getElementById(
-        'certificateModal'
-      );
+    function openCertificate(card) {
+      const title = card.dataset.title || 'Certificate';
+      const issuer = card.dataset.issuer || '—';
+      const date = card.dataset.date || '—';
+      const image = card.dataset.image || '';
+      const skills = (card.dataset.skills || '').split(',').map(s => s.trim()).filter(Boolean);
 
-    const certificateClose =
-      document.getElementById(
-        'certificateClose'
-      );
+      certificateTitle.textContent = title;
+      certificateName.textContent = title;
+      certificateIssuer.textContent = issuer;
+      certificateDate.textContent = date;
+      certificateImage.src = image;
+      certificateImage.alt = title + ' certificate';
+      certificateCaption.textContent = `${title} · ${issuer} · ${date}`;
+      certificateSkills.innerHTML = '';
+      skills.forEach(skill => {
+        const span = document.createElement('span');
+        span.textContent = skill;
+        certificateSkills.appendChild(span);
+      });
 
-
-    function openCertificate() {
-
-      certificateModal
-        .classList
-        .add('active');
-
-      certificateModal
-        .setAttribute(
-          'aria-hidden',
-          'false'
-        );
-
-      document.body
-        .classList
-        .add('modal-open');
-
-      setTimeout(
-        () =>
-          certificateClose.focus(),
-        50
-      );
-
+      certificateModal.classList.add('active');
+      certificateModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      setTimeout(() => certificateClose.focus(), 50);
     }
-
 
     function closeCertificate() {
-
-      certificateModal
-        .classList
-        .remove('active');
-
-      certificateModal
-        .setAttribute(
-          'aria-hidden',
-          'true'
-        );
-
-      document.body
-        .classList
-        .remove('modal-open');
-
-      certificateButton.focus();
-
+      certificateModal.classList.remove('active');
+      certificateModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
     }
 
+    certificateCards.forEach(card => {
+      card.addEventListener('click', () => openCertificate(card));
+    });
 
-    certificateButton
-      .addEventListener(
-        'click',
-        openCertificate
-      );
+    certificateClose.addEventListener('click', closeCertificate);
 
-
-    certificateClose
-      .addEventListener(
-        'click',
-        closeCertificate
-      );
-
-
-    certificateModal
-      .addEventListener(
-        'click',
-        event => {
-
-          if (
-            event.target ===
-            certificateModal
-          ) {
-
-            closeCertificate();
-
-          }
-
-        }
-      );
-
+    certificateModal.addEventListener('click', event => {
+      if (event.target === certificateModal) closeCertificate();
+    });
 
     /* =======================================================
        ESCAPE KEY
