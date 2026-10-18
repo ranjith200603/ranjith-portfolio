@@ -36,7 +36,7 @@ pipeline {
                         fi
                     done
 
-                    echo "Portfolio deployment completed"
+                    echo "Portfolio deployment completed successfully"
                 '''
             }
         }
@@ -46,7 +46,6 @@ pipeline {
         success {
             echo 'SUCCESS: Portfolio deployed!'
         }
-
         failure {
             echo 'FAILED: Check Console Output.'
         }
