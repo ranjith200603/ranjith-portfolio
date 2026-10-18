@@ -23,10 +23,19 @@ pipeline {
             steps {
                 sh '''
                     set -eu
-                    sudo cp index.html /var/www/html/index.html
-                    sudo cp -r admin /var/www/html/ 2>/dev/null || true
-                    sudo cp -r *.jpg /var/www/html/ 2>/dev/null || true
-                    sudo cp -r *.png /var/www/html/ 2>/dev/null || true
+
+                    cp index.html /var/www/html/index.html
+
+                    if [ -d admin ]; then
+                        cp -r admin /var/www/html/
+                    fi
+
+                    for file in *.jpg *.jpeg *.png *.svg *.webp *.pdf; do
+                        if [ -f "$file" ]; then
+                            cp "$file" /var/www/html/
+                        fi
+                    done
+
                     echo "Portfolio deployment completed"
                 '''
             }
@@ -35,10 +44,11 @@ pipeline {
 
     post {
         success {
-            echo 'Portfolio deployed successfully!'
+            echo 'SUCCESS: Portfolio deployed!'
         }
+
         failure {
-            echo 'Pipeline failed. Check the console output.'
+            echo 'FAILED: Check Console Output.'
         }
     }
 }
