@@ -1,4 +1,4 @@
-
+```groovy
 pipeline {
     agent any
 
@@ -13,7 +13,6 @@ pipeline {
         DOCKER_IMAGE = 'ranjithkumarrk27/project-2-cicd'
         APP_CONTAINER = 'project-2-app'
         APP_PORT = '3001'
-        APP_INTERNAL_PORT = '3000'
     }
 
     stages {
@@ -21,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                echo 'Source code checked out successfully.'
+                echo 'Static website source code checked out.'
             }
         }
 
@@ -30,24 +29,28 @@ pipeline {
                 sh '''
                     set -eu
 
-                    echo "Node.js version:"
-                    node --version
-
-                    echo "NPM version:"
-                    npm --version
-
                     echo "Docker version:"
                     docker --version
+
+                    echo "Website files:"
+                    ls -la
+
+                    test -f index.html
+                    echo "index.html found successfully."
                 '''
             }
         }
 
-        stage('Install and Test') {
+        stage('Validate Static Website') {
             steps {
                 sh '''
                     set -eu
-                    npm install
-                    npm test
+
+                    test -s index.html
+
+                    grep -qi '<html' index.html
+
+                    echo "Static website validation passed."
                 '''
             }
         }
@@ -116,7 +119,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy Static Website') {
             steps {
                 sh '''
                     set -eu
@@ -128,10 +131,10 @@ pipeline {
                     docker run -d \
                         --name "$APP_CONTAINER" \
                         --restart unless-stopped \
-                        -p "$APP_PORT:$APP_INTERNAL_PORT" \
+                        -p "$APP_PORT:80" \
                         "$DOCKER_IMAGE:latest"
 
-                    echo "Application container started."
+                    echo "Static website container started."
                 '''
             }
         }
@@ -144,23 +147,19 @@ pipeline {
                     ATTEMPTS=12
 
                     for i in $(seq 1 "$ATTEMPTS"); do
-                        if docker exec "$APP_CONTAINER" node -e "
-                            fetch('http://127.0.0.1:3000/health')
-                              .then(async r => {
-                                console.log(await r.text());
-                                process.exit(r.ok ? 0 : 1);
-                              })
-                              .catch(() => process.exit(1));
-                        "; then
-                            echo "Application health check passed."
+                        if curl -fsS \
+                            "http://127.0.0.1:$APP_PORT/" \
+                            -o /dev/null; then
+
+                            echo "Website health check passed."
                             exit 0
                         fi
 
-                        echo "Waiting for application... ($i/$ATTEMPTS)"
+                        echo "Waiting for website... ($i/$ATTEMPTS)"
                         sleep 5
                     done
 
-                    echo "Health check failed."
+                    echo "Website health check failed."
                     docker logs "$APP_CONTAINER" || true
                     exit 1
                 '''
@@ -170,60 +169,11 @@ pipeline {
 
     post {
         success {
-            echo 'SUCCESS: CI/CD pipeline completed successfully.'
-
-            emailext(
-                to: 'YOUR_EMAIL@gmail.com',
-                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Hello,
-
-Your CI/CD pipeline completed successfully.
-
-Job: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Status: ${currentBuild.currentResult}
-
-Completed stages:
-- Node.js tests
-- SonarQube analysis and Quality Gate
-- Docker image build and Docker Hub push
-- EC2 deployment
-- Application health check
-
-Console Output:
-${env.BUILD_URL}console
-
-Regards,
-Jenkins CI/CD
-"""
-            )
+            echo 'SUCCESS: Static website CI/CD completed.'
         }
 
         failure {
-            echo 'FAILED: Please check the Jenkins Console Output.'
-
-            emailext(
-                to: 'YOUR_EMAIL@gmail.com',
-                subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Hello,
-
-Your CI/CD pipeline failed.
-
-Job: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Status: ${currentBuild.currentResult}
-
-Please check the Console Output to identify the failing stage.
-
-Console Output:
-${env.BUILD_URL}console
-
-Regards,
-Jenkins CI/CD
-"""
-            )
+            echo 'FAILED: Check the Jenkins Console Output.'
         }
 
         always {
@@ -231,3 +181,4 @@ Jenkins CI/CD
         }
     }
 }
+```
