@@ -47,7 +47,6 @@ pipeline {
                     set -eu
 
                     test -s index.html
-
                     grep -qi '<html' index.html
 
                     echo "Static website validation passed."
@@ -124,7 +123,7 @@ pipeline {
                 sh '''
                     set -eu
 
-                    docker pull "$DOCKER_IMAGE:latest"
+                    docker pull "$DOCKER_IMAGE:$BUILD_NUMBER"
 
                     docker rm -f "$APP_CONTAINER" || true
 
@@ -132,7 +131,7 @@ pipeline {
                         --name "$APP_CONTAINER" \
                         --restart unless-stopped \
                         -p "$APP_PORT:80" \
-                        "$DOCKER_IMAGE:latest"
+                        "$DOCKER_IMAGE:$BUILD_NUMBER"
 
                     echo "Static website container started."
                 '''
@@ -146,9 +145,15 @@ pipeline {
 
                     ATTEMPTS=12
 
+                    HOST_GATEWAY=$(docker inspect \
+                        -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' \
+                        "$(hostname)")
+
+                    echo "Docker host gateway: $HOST_GATEWAY"
+
                     for i in $(seq 1 "$ATTEMPTS"); do
                         if curl -fsS \
-                            "http://127.0.0.1:$APP_PORT/" \
+                            "http://$HOST_GATEWAY:$APP_PORT/" \
                             -o /dev/null; then
 
                             echo "Website health check passed."
