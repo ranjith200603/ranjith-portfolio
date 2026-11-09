@@ -161,6 +161,15 @@
        NAVBAR — FLOATING GLASS / HUD
     ========================================================= */
 
+
+    .nav-links a.active {
+    color: #00e5ff !important;
+    background: rgba(0, 229, 255, 0.12);
+    border-bottom: 2px solid #00e5ff;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
     nav {
       position: fixed;
       top: 18px;
@@ -3875,6 +3884,55 @@
   <!-- =======================================================
        JAVASCRIPT
   ======================================================== -->
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const sectionIds = [
+        "about",
+        "skills",
+        "projects",
+        "education",
+        "certifications",
+        "contact"
+    ];
+
+    const sections = sectionIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+    function activateLink(id) {
+        navLinks.forEach(link => {
+            const active = link.getAttribute("href") === "#" + id;
+            link.classList.toggle("active", active);
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            activateLink(this.getAttribute("href").substring(1));
+        });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+        const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length) {
+            activateLink(visible[0].target.id);
+        }
+    }, {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: 0
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+});
+</script>
 
   <script>
 
