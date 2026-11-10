@@ -4856,47 +4856,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
 
+
 <script>
 window.addEventListener("load", () => {
+  const welcomeAudio = new Audio("./ttsmaker-english-3.mp3");
 
-  function playWelcomeVoice() {
-    if (!("speechSynthesis" in window)) {
-      console.log("Speech is not supported");
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const message = new SpeechSynthesisUtterance(
-      "Welcome back, Ranjith Kumar Portfolio."
-    );
-
-    message.lang = "en-IN";
-    message.rate = 0.88;
-    message.pitch = 0.85;
-    message.volume = 1;
-
-    const voices = window.speechSynthesis.getVoices();
-
-    const selectedVoice =
-      voices.find(v => v.lang === "en-IN") ||
-      voices.find(v => v.lang.startsWith("en-GB")) ||
-      voices.find(v => v.lang.startsWith("en"));
-
-    if (selectedVoice) {
-      message.voice = selectedVoice;
-    }
-
-    window.speechSynthesis.speak(message);
-  }
+  welcomeAudio.volume = 1;
+  welcomeAudio.preload = "auto";
 
   // Automatically play welcome voice
-  setTimeout(playWelcomeVoice, 1200);
-
+  welcomeAudio.play().catch((error) => {
+    console.log("Browser blocked autoplay:", error);
+  });
 });
 </script>
-</body>
-</html>
+
+
 
 </body>
 </html>
