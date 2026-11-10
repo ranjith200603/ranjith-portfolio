@@ -4665,135 +4665,68 @@ document.addEventListener("DOMContentLoaded", function () {
        TYPING EFFECT
     ======================================================== */
 
-    const roleEl =
-      document.querySelector(
-        '.hero-role'
-      );
+    
+/* =======================================================
+   DEVOPS TYPING EFFECT
+======================================================= */
 
-    const phrases = [
+const roleEl = document.querySelector(".hero-role");
 
-      'AI Automation Engineer',
+const phrases = [
+  "DevOps Engineer",
+  "Cloud Infrastructure Specialist",
+  "CI/CD Automation Engineer",
+  "AWS & Terraform Engineer",
+  "Deployment Automation Specialist"
+];
 
-      'Workflow Architect',
+let pi = 0;
+let ci = 0;
+let deleting = false;
+let paused = false;
 
-      'OpenAI Integration Dev',
+function type() {
+  if (!roleEl || paused) return;
 
-      'n8n Automation Specialist'
+  const current = phrases[pi];
 
-    ];
+  if (!deleting) {
+    ci++;
 
+    roleEl.innerHTML =
+      current.slice(0, ci) +
+      ' <span>| DevOps</span>';
 
-    let pi = 0;
+    if (ci >= current.length) {
+      paused = true;
 
-    let ci = 0;
-
-    let deleting = false;
-
-    let paused = false;
-
-
-    function type() {
-
-      if (paused) return;
-
-
-      const current =
-        phrases[pi];
-
-
-      if (!deleting) {
-
-        ci++;
-
-
-        roleEl.innerHTML =
-          current.slice(0,ci) +
-          ' &amp; <span>' +
-          phrases[
-            (pi + 1) %
-            phrases.length
-          ].split(' ')[0] +
-          '</span>';
-
-
-        if (
-          ci ===
-          current.length
-        ) {
-
-          paused = true;
-
-
-          setTimeout(
-            () => {
-
-              paused = false;
-
-              deleting = true;
-
-              type();
-
-            },
-            2200
-          );
-
-        }
-
-        else {
-
-          setTimeout(
-            type,
-            55
-          );
-
-        }
-
-      }
-
-      else {
-
-        ci--;
-
-
-        roleEl.innerHTML =
-          current.slice(0,ci) +
-          ' &amp; <span>Workflow Architect</span>';
-
-
-        if (ci === 0) {
-
-          deleting = false;
-
-          pi =
-            (pi + 1) %
-            phrases.length;
-
-          setTimeout(
-            type,
-            400
-          );
-
-        }
-
-        else {
-
-          setTimeout(
-            type,
-            28
-          );
-
-        }
-
-      }
-
+      setTimeout(() => {
+        paused = false;
+        deleting = true;
+        type();
+      }, 1800);
+    } else {
+      setTimeout(type, 65);
     }
 
+  } else {
+    ci--;
 
-    setTimeout(
-      type,
-      1400
-    );
+    roleEl.innerHTML =
+      current.slice(0, ci) +
+      ' <span>| DevOps</span>';
 
+    if (ci <= 0) {
+      deleting = false;
+      pi = (pi + 1) % phrases.length;
+      setTimeout(type, 350);
+    } else {
+      setTimeout(type, 35);
+    }
+  }
+}
+
+setTimeout(type, 1400);
 
   
 
