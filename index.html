@@ -4855,49 +4855,90 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
   
+
 <script>
-function playWelcomeVoice() {
-  window.speechSynthesis.cancel();
+document.addEventListener("DOMContentLoaded", () => {
 
-  const voice = new SpeechSynthesisUtterance(
-    "Welcome back, Ranjithkumar Portfolio."
-  );
-
-  voice.lang = "en-IN";
-  voice.rate = 0.9;
-  voice.pitch = 0.9;
-  voice.volume = 1;
-
-  window.speechSynthesis.speak(voice);
-}
-
-document.addEventListener("DOMContentLoaded", function () {
+  // Create welcome sound button
   const btn = document.createElement("button");
 
-  btn.innerText = "🔊 Enable Sound";
+  btn.id = "welcomeSoundBtn";
+  btn.innerText = "🔊 Play Welcome Sound";
 
   btn.style.cssText = `
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 99999;
+    z-index: 999999;
+    padding: 12px 18px;
     background: #00eaff;
     color: #000;
-    padding: 12px 18px;
     border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
   `;
 
-  btn.onclick = function () {
-    playWelcomeVoice();
-    btn.innerText = "✓ Sound Enabled";
-  };
-
   document.body.appendChild(btn);
+
+  btn.addEventListener("click", () => {
+
+    if (!("speechSynthesis" in window)) {
+      btn.innerText = "Voice not supported";
+      alert("Your browser does not support voice playback.");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const speak = () => {
+      const message = new SpeechSynthesisUtterance(
+        "Welcome back, Ranjithkumar Portfolio."
+      );
+
+      message.lang = "en-IN";
+      message.rate = 0.85;
+      message.pitch = 1;
+      message.volume = 1;
+
+      const voices = window.speechSynthesis.getVoices();
+
+      const selectedVoice =
+        voices.find(v => v.lang === "en-IN") ||
+        voices.find(v => v.lang.startsWith("en")) ||
+        null;
+
+      if (selectedVoice) {
+        message.voice = selectedVoice;
+      }
+
+      message.onstart = () => {
+        btn.innerText = "🔊 Playing...";
+      };
+
+      message.onend = () => {
+        btn.innerText = "✓ Play Again";
+      };
+
+      message.onerror = (event) => {
+        btn.innerText = "❌ Voice Error";
+        console.error("Speech error:", event.error);
+      };
+
+      window.speechSynthesis.speak(message);
+    };
+
+    // Allow browser voice engine to initialize
+    window.speechSynthesis.getVoices();
+    setTimeout(speak, 200);
+
+  });
+
 });
 </script>
+</body>
+</html>
+
 </body>
 </html>
 
