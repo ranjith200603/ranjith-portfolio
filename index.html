@@ -4857,19 +4857,33 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
 
+
+<audio id="welcomeAudio"
+       src="./ttsmaker-english-3.mp3"
+       preload="auto"></audio>
+
 <script>
-window.addEventListener("load", () => {
-  const welcomeAudio = new Audio("./ttsmaker-english-3.mp3");
+window.addEventListener("load", async () => {
+  const audio = document.getElementById("welcomeAudio");
 
-  welcomeAudio.volume = 1;
-  welcomeAudio.preload = "auto";
-
-  // Automatically play welcome voice
-  welcomeAudio.play().catch((error) => {
-    console.log("Browser blocked autoplay:", error);
+  audio.addEventListener("canplaythrough", () => {
+    console.log("Welcome MP3 loaded successfully!");
   });
+
+  audio.addEventListener("error", () => {
+    console.error("MP3 file not found or failed to load!");
+  });
+
+  try {
+    await audio.play();
+    console.log("Welcome voice playing!");
+  } catch (error) {
+    console.error("Autoplay blocked:", error);
+  }
 });
 </script>
+</body>
+
 
 
 
