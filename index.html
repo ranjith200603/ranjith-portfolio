@@ -4857,91 +4857,46 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
 
-  // Create welcome sound button
-  const btn = document.createElement("button");
-
-  btn.id = "welcomeSoundBtn";
-  btn.innerText = "🔊 Play Welcome Sound";
-
-  btn.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999999;
-    padding: 12px 18px;
-    background: #00eaff;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  `;
-
-  document.body.appendChild(btn);
-
-  btn.addEventListener("click", () => {
-
+  function playWelcomeVoice() {
     if (!("speechSynthesis" in window)) {
-      btn.innerText = "Voice not supported";
-      alert("Your browser does not support voice playback.");
+      console.log("Speech is not supported");
       return;
     }
 
     window.speechSynthesis.cancel();
 
-    const speak = () => {
-      const message = new SpeechSynthesisUtterance(
-        "Welcome back, Ranjithkumar Portfolio."
-      );
+    const message = new SpeechSynthesisUtterance(
+      "Welcome back, Ranjith Kumar Portfolio."
+    );
 
-      message.lang = "en-IN";
-      message.rate = 0.85;
-      message.pitch = 1;
-      message.volume = 1;
+    message.lang = "en-IN";
+    message.rate = 0.88;
+    message.pitch = 0.85;
+    message.volume = 1;
 
-      const voices = window.speechSynthesis.getVoices();
+    const voices = window.speechSynthesis.getVoices();
 
-      const selectedVoice =
-        voices.find(v => v.lang === "en-IN") ||
-        voices.find(v => v.lang.startsWith("en")) ||
-        null;
+    const selectedVoice =
+      voices.find(v => v.lang === "en-IN") ||
+      voices.find(v => v.lang.startsWith("en-GB")) ||
+      voices.find(v => v.lang.startsWith("en"));
 
-      if (selectedVoice) {
-        message.voice = selectedVoice;
-      }
+    if (selectedVoice) {
+      message.voice = selectedVoice;
+    }
 
-      message.onstart = () => {
-        btn.innerText = "🔊 Playing...";
-      };
+    window.speechSynthesis.speak(message);
+  }
 
-      message.onend = () => {
-        btn.innerText = "✓ Play Again";
-      };
-
-      message.onerror = (event) => {
-        btn.innerText = "❌ Voice Error";
-        console.error("Speech error:", event.error);
-      };
-
-      window.speechSynthesis.speak(message);
-    };
-
-    // Allow browser voice engine to initialize
-    window.speechSynthesis.getVoices();
-    setTimeout(speak, 200);
-
-  });
+  // Automatically play welcome voice
+  setTimeout(playWelcomeVoice, 1200);
 
 });
 </script>
 </body>
 </html>
-
-</body>
-</html>
-
 
 </body>
 </html>
